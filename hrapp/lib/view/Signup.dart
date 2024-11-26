@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:hrapp/controller/PasswordEye.dart';
 import 'package:hrapp/controller/signup_controller.dart';
+import 'package:hrapp/view/SignIn_with_employeeid.dart';
 import 'package:hrapp/view/signin.dart';
 
 class Signup extends StatelessWidget {
@@ -223,11 +224,10 @@ Obx(() => TextField(
                           ),
                           child: ElevatedButton.icon(
                             onPressed: () {
-                              // Handle Employee ID sign-in
-                            },
+Get.off(EmployeeIdSignIn())    ;                 },
                             icon: Icon(Icons.badge, color: Colors.purple),
                             label: Text(
-                              "Sign Up With Employee ID",
+                              "Sign In With Employee ID",
                               style: TextStyle(color: Colors.purple),
                             ),
                             style: ElevatedButton.styleFrom(

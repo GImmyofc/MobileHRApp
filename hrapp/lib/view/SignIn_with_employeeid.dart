@@ -1,15 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:hrapp/controller/PasswordEye.dart';
-import 'package:hrapp/controller/signup_controller.dart';
-import 'package:hrapp/view/SignIn_with_employeeid.dart';
 import 'package:hrapp/view/Signup.dart';
 
-class SignIn extends StatelessWidget {
-  SignIn({super.key});
+class EmployeeIdSignIn extends StatelessWidget {
+  final RxBool rememberMe = false.obs; // Observable for the checkbox
 
-  final PasswordController controller = Get.put(PasswordController());
-  final EmailController _controller = Get.put(EmailController());
+  EmployeeIdSignIn({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -57,7 +53,7 @@ class SignIn extends StatelessWidget {
                         // Title and Subtitle
                         Center(
                           child: Text(
-                            "Sign In",
+                            "Employee ID Sign In",
                             style: TextStyle(
                               fontSize: 24,
                               fontWeight: FontWeight.bold,
@@ -68,7 +64,7 @@ class SignIn extends StatelessWidget {
                         const SizedBox(height: 8),
                         Center(
                           child: Text(
-                            "Log in to your account",
+                            "Sign in with your Employee ID",
                             style: TextStyle(
                               fontSize: 16,
                               color: Colors.grey,
@@ -77,62 +73,65 @@ class SignIn extends StatelessWidget {
                         ),
                         const SizedBox(height: 20),
 
-                        // Email Input Field
-                       // Email Input Field with Validation
-Obx(() => TextField(
-      onChanged: (value) {
-        _controller.email.value = value; // Update email in the controller
-        _controller.validateEmail(value); // Trigger validation
-      },
-      decoration: InputDecoration(
-        labelText: "Email",
-        prefixIcon: Icon(Icons.email),
-        border: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(10),
-        ),
-        errorText: _controller.errorMessage.value.isEmpty
-            ? null
-            : _controller.errorMessage.value, // Show validation error
-      ),
-    )),
-
-                        const SizedBox(height: 15),
-
-                        // Password Input Field
-                        Obx(() => TextField(
-                              obscureText: controller.isObscured.value, // Toggle visibility
-                              decoration: InputDecoration(
-                                labelText: "Password",
-                                prefixIcon: const Icon(Icons.lock),
-                                suffixIcon: IconButton(
-                                  icon: Icon(
-                                    controller.isObscured.value
-                                        ? Icons.visibility
-                                        : Icons.visibility_off,
-                                  ),
-                                  onPressed: controller.toggleVisibility,
-                                ),
-                                border: OutlineInputBorder(
-                                  borderRadius: BorderRadius.circular(10),
-                                ),
-                              ),
-                            )),
-                        const SizedBox(height: 10),
-
-                        // Forgot Password Link
-                        Align(
-                          alignment: Alignment.centerRight,
-                          child: TextButton(
-                            onPressed: () {
-                              // Handle Forgot Password navigation
-                            },
-                            child: const Text(
-                              "Forgot Password?",
-                              style: TextStyle(color: Colors.purple),
+                        // Employee ID Input Field
+                        TextField(
+                          decoration: InputDecoration(
+                            labelText: "Employee ID",
+                            prefixIcon: Icon(Icons.badge),
+                            border: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(10),
                             ),
                           ),
                         ),
                         const SizedBox(height: 15),
+
+                        // Password Input Field
+                        TextField(
+                          obscureText: true, // For password input
+                          decoration: InputDecoration(
+                            labelText: "Password",
+                            prefixIcon: Icon(Icons.lock),
+                            border: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(10),
+                              
+                            ),
+                            
+                          ),
+                        ),
+                        const SizedBox(height: 15),
+
+                        // Remember Me and Forgot Password Row
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            // Remember Me Checkbox
+                            Obx(() => Row(
+                                  children: [
+                                    Checkbox(
+                                      value: rememberMe.value,
+                                      onChanged: (value) {
+                                        rememberMe.value = value!;
+                                      },
+                                    ),
+                                    const Text(
+                                      "Remember Me",
+                                      style: TextStyle(color: Colors.black),
+                                    ),
+                                  ],
+                                )),
+
+                            // Forgot Password Button
+                            TextButton(
+                              onPressed: () {
+                                // Handle forgot password logic
+                              },
+                              child: const Text(
+                                "Forgot Password?",
+                                style: TextStyle(color: Colors.purple),
+                              ),
+                            ),
+                          ],
+                        ),
 
                         // Gradient Sign In Button
                         Container(
@@ -150,7 +149,7 @@ Obx(() => TextField(
                           ),
                           child: ElevatedButton(
                             onPressed: () {
-                              // Handle sign-in logic
+                              // Handle sign-in logic with Employee ID
                             },
                             style: ElevatedButton.styleFrom(
                               backgroundColor: Colors.transparent,
@@ -170,65 +169,13 @@ Obx(() => TextField(
                             ),
                           ),
                         ),
-                        const SizedBox(height: 15),
-
-                        // OR Divider
-                        Row(
-                          children: [
-                            Expanded(
-                              child: Divider(
-                                thickness: 1,
-                                color: Colors.grey.shade300,
-                              ),
-                            ),
-                            Padding(
-                              padding: const EdgeInsets.symmetric(horizontal: 8.0),
-                              child: Text(
-                                "OR",
-                                style: TextStyle(color: Colors.grey),
-                              ),
-                            ),
-                            Expanded(
-                              child: Divider(
-                                thickness: 1,
-                                color: Colors.grey.shade300,
-                              ),
-                            ),
-                          ],
-                        ),
-                        const SizedBox(height: 15),
-
-                        // Sign In With Employee ID Button
-                        Container(
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(30),
-                            border: Border.all(color: Colors.purple),
-                          ),
-                          child: ElevatedButton.icon(
-                            onPressed: () {
-Get.off(EmployeeIdSignIn())    ;                             },
-                            icon: Icon(Icons.badge, color: Colors.purple),
-                            label: Text(
-                              "Sign In With Employee ID",
-                              style: TextStyle(color: Colors.purple),
-                            ),
-                            style: ElevatedButton.styleFrom(
-                              backgroundColor: Colors.white,
-                              shadowColor: Colors.transparent,
-                              padding: const EdgeInsets.symmetric(vertical: 16),
-                              shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(30),
-                              ),
-                            ),
-                          ),
-                        ),
                       ],
                     ),
                   ),
 
                   const SizedBox(height: 15),
 
-                  // Don't Have an Account Text
+                  // Back to Sign Up Screen Text
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
@@ -238,7 +185,7 @@ Get.off(EmployeeIdSignIn())    ;                             },
                       ),
                       TextButton(
                         onPressed: () {
-                          Get.off(() => Signup()); // Navigate to Sign Up screen
+                          Get.off(() => Signup()); // Navigate back to Signup screen
                         },
                         child: const Text(
                           "Sign Up",
