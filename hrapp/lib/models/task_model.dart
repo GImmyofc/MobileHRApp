@@ -16,6 +16,7 @@ class Task {
     required this.date,
     this.comments = 0, // Default to no comments
     this.points = 10, // Default points
-    this.icon = "📌", // Default icon
+    this.icon = "📌",
+    //  required Task task, // Default icon
   });
 }

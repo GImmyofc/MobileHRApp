@@ -1,9 +1,11 @@
 import 'package:get/get.dart';
+
 import '../models/task_model.dart';
+
 
 class TaskController extends GetxController {
   var tasks = <Task>[
-    Task(
+   Task(
       title: "Review Team Scrim Performance",
       status: "Completed",
       priority: "High",

@@ -21,10 +21,11 @@ class HomeScreen extends StatelessWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
+                
                 _buildProfileSection(),
                 const SizedBox(height: 20),
-                _buildSummarySection(context),
-                const SizedBox(height: 20),
+                _buildCard(),
+                  const SizedBox(height: 20),
                 _buildTaskList(),
               ],
             ),
@@ -76,92 +77,27 @@ class HomeScreen extends StatelessWidget {
         ),
         IconButton(
           onPressed: () {},
-          icon: const Icon(Icons.message_rounded),
-          color: Colors.blue,
-        ),
-        IconButton(
-          onPressed: () {},
           icon: const Icon(Icons.notifications_rounded),
           color: Colors.blue,
         ),
       ],
     );
   }
-
-  Widget _buildSummarySection(BuildContext context) {
-    return GestureDetector(
-      onTap: () {
-        Get.to(() => TaskSummaryScreen());
-      },
-      child: Container(
-        width: double.infinity,
-        padding: const EdgeInsets.all(20.0),
-        decoration: BoxDecoration(
-          color: const Color(0xFF7544FC),
-          borderRadius: BorderRadius.circular(15),
-        ),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            const Text(
-              "Summary of Your Work",
-              style: TextStyle(
-                fontSize: 18,
-                fontWeight: FontWeight.bold,
-                color: Colors.white,
-              ),
-            ),
-            const SizedBox(height: 10),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                _buildSummaryItem(
-                  "To Do",
-                  taskController.countByStatus("Pending"),
-                  Colors.orange,
-                ),
-                _buildSummaryItem(
-                  "In Progress",
-                  taskController.countByStatus("In Progress"),
-                  Colors.blue,
-                ),
-                _buildSummaryItem(
-                  "Done",
-                  taskController.countByStatus("Completed"),
-                  Colors.green,
-                ),
-              ],
-            ),
-          ],
-        ),
-      ),
-    );
-  }
-
-  Widget _buildSummaryItem(String title, int count, Color color) {
+   
+  Widget _buildCard() {
     return Column(
       children: [
-        Icon(Icons.circle, color: color),
-        const SizedBox(height: 5),
-        Text(
-          "$count",
-          style: const TextStyle(
-            fontSize: 16,
-            fontWeight: FontWeight.bold,
-            color: Colors.white,
-          ),
-        ),
-        const SizedBox(height: 5),
-        Text(
-          title,
-          style: const TextStyle(
-            fontSize: 14,
-            color: Colors.white70,
-          ),
-        ),
+        SizedBox(
+                width: double.infinity,
+                
+                child: Image.asset(
+                  "media/Banner.png", // Background image
+                  fit: BoxFit.cover, // Ensures the image covers the area
+                ),
+              ),
       ],
     );
-  }
+  } 
 
   Widget _buildTaskList() {
     return Column(

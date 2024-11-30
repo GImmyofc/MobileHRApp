@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:hrapp/view/Home/Home.dart';
+import 'package:hrapp/view/Home/Leave.dart';
 import 'package:hrapp/view/Home/Payroll.dart';
 import 'package:hrapp/view/Home/Profile.dart';
+import 'package:hrapp/view/Home/Tasks.dart';
 
 void main() {
   runApp(const MyApp());
@@ -34,6 +36,8 @@ class _HomeState extends State<Home> {
     HomeScreen(),
     Payroll(),
     Profile(),
+   Tasks(),
+   Leave()
   ];
 
   @override
@@ -43,7 +47,10 @@ class _HomeState extends State<Home> {
         index: _currentIndex,
         children: _screens,
       ),
-      bottomNavigationBar: BottomNavigationBar(
+      bottomNavigationBar: BottomNavigationBar(fixedColor: Colors.black,
+      unselectedItemColor: Colors.grey,
+      backgroundColor: Color.fromARGB(0, 186, 71, 222),
+      
         currentIndex: _currentIndex,
         onTap: (index) {
           setState(() {
@@ -62,6 +69,14 @@ class _HomeState extends State<Home> {
           BottomNavigationBarItem(
             icon: Icon(Icons.person),
             label: "Profile",
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.book),
+            label: "Tasks",
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.task),
+            label: "Leave",
           ),
         ],
       ),
