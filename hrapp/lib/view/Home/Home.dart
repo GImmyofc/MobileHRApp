@@ -1,16 +1,21 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:hrapp/controller/custom_bottom_navigation.dart';
 import 'package:hrapp/controller/task_controller.dart';
+
 import 'package:hrapp/models/task_model.dart';
-import 'package:hrapp/view/Home/TaskSummary.dart';
+import 'package:hrapp/view/Home/Leave.dart';
+import 'package:hrapp/view/Home/Payroll.dart';
+import 'package:hrapp/view/Home/Profile.dart';
+import 'package:hrapp/view/Home/Tasks.dart';
 
-
-class HomeScreen extends StatelessWidget {
-  final TaskController taskController = Get.put(TaskController());
+class HomeScreen extends StatefulWidget {
+  final TaskController taskController = Get.put(TaskController(Tasks));
 
   HomeScreen({super.key});
 
   @override
+  State<HomeScreen> createState() => _HomeScreenState();
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
@@ -21,15 +26,20 @@ class HomeScreen extends StatelessWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                
                 _buildProfileSection(),
                 const SizedBox(height: 20),
                 _buildCard(),
-                  const SizedBox(height: 20),
+                const SizedBox(height: 20),
                 _buildTaskList(),
               ],
             ),
           ),
+        ),
+        bottomNavigationBar: CustomBottomNavigationBar(
+          currentIndex: taskController.currentIndex.value,
+          onTap: (index) {
+            taskController.currentIndex.value = index;
+          },
         ),
       ),
     );
@@ -83,21 +93,20 @@ class HomeScreen extends StatelessWidget {
       ],
     );
   }
-   
+
   Widget _buildCard() {
     return Column(
       children: [
         SizedBox(
-                width: double.infinity,
-                
-                child: Image.asset(
-                  "media/Banner.png", // Background image
-                  fit: BoxFit.cover, // Ensures the image covers the area
-                ),
-              ),
+          width: double.infinity,
+          child: Image.asset(
+            "media/Banner.png", // Background image
+            fit: BoxFit.cover, // Ensures the image covers the area
+          ),
+        ),
       ],
     );
-  } 
+  }
 
   Widget _buildTaskList() {
     return Column(
@@ -189,6 +198,65 @@ class HomeScreen extends StatelessWidget {
         taskController.markTaskAsFinished(index);
         Get.back();
       },
+    );
+  }
+}
+
+class _HomeScreenState extends State<HomeScreen> {
+  int _currentIndex = 0; // Tracks the selected index
+
+  final List<Widget> _screens = [
+    Home(),
+    Payroll(),
+    Profile(),
+    Tasks(),
+    Leave(),
+  ];
+
+  void _onTap(int index) {
+    setState(() {
+      _currentIndex = index;
+    });
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      body: _screens[
+          _currentIndex], // Shows the corresponding screen based on index
+      bottomNavigationBar: CustomBottomNavigationBar(
+        currentIndex: _currentIndex,
+        onTap: _onTap, // Callback when a tab is selected
+      ),
+    );
+  }
+}
+
+class Home extends StatefulWidget {
+  const Home({super.key});
+
+  @override
+  State<Home> createState() => _HomeState();
+}
+
+class _HomeState extends State<Home> {
+  int _currentIndex = 0;
+
+  final List<Widget> _screens = [
+    HomeScreen(),
+    Payroll(),
+    Profile(),
+    Tasks(),
+    Leave()
+  ];
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      body: IndexedStack(
+        index: _currentIndex,
+        children: _screens,
+      ),
     );
   }
 }

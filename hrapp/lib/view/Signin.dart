@@ -11,6 +11,8 @@ class SignIn extends StatelessWidget {
   final PasswordController controller = Get.put(PasswordController());
   final EmailController _controller = Get.put(EmailController());
 
+  // Login function
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -19,18 +21,16 @@ class SignIn extends StatelessWidget {
           // Background Image
           Positioned.fill(
             child: Image.asset(
-              "media/First2.png", // Replace with your image path
-              fit: BoxFit.cover, // Ensures the image covers the entire background
+              "media/First2.png",
+              fit: BoxFit.cover,
             ),
           ),
-
-          // Semi-transparent Overlay (Optional for better readability)
+          // Semi-transparent Overlay
           Positioned.fill(
             child: Container(
-              color: Colors.black.withOpacity(0.5), // Adjust opacity as needed
+              color: Colors.black.withOpacity(0.5),
             ),
           ),
-
           // Foreground Content
           Center(
             child: SingleChildScrollView(
@@ -38,11 +38,11 @@ class SignIn extends StatelessWidget {
                 children: [
                   // Main Card for Form
                   Container(
-                    width: MediaQuery.of(context).size.width * 0.9, // 90% of screen width
+                    width: MediaQuery.of(context).size.width * 0.9,
                     padding: const EdgeInsets.all(20.0),
                     decoration: BoxDecoration(
-                      color: Colors.white, // Card background
-                      borderRadius: BorderRadius.circular(20), // Rounded corners
+                      color: Colors.white,
+                      borderRadius: BorderRadius.circular(20),
                       boxShadow: [
                         BoxShadow(
                           color: Colors.black.withOpacity(0.2),
@@ -78,29 +78,32 @@ class SignIn extends StatelessWidget {
                         const SizedBox(height: 20),
 
                         // Email Input Field
-                       // Email Input Field with Validation
-Obx(() => TextField(
-      onChanged: (value) {
-        _controller.email.value = value; // Update email in the controller
-        _controller.validateEmail(value); // Trigger validation
-      },
-      decoration: InputDecoration(
-        labelText: "Email",
-        prefixIcon: Icon(Icons.email),
-        border: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(10),
-        ),
-        errorText: _controller.errorMessage.value.isEmpty
-            ? null
-            : _controller.errorMessage.value, // Show validation error
-      ),
-    )),
+                        Obx(() => TextField(
+                              onChanged: (value) {
+                                _controller.email.value = value;
+                                _controller.validateEmail(value);
+                              },
+                              decoration: InputDecoration(
+                                labelText: "Email",
+                                prefixIcon: Icon(Icons.email),
+                                border: OutlineInputBorder(
+                                  borderRadius: BorderRadius.circular(10),
+                                ),
+                                errorText:
+                                    _controller.errorMessage.value.isEmpty
+                                        ? null
+                                        : _controller.errorMessage.value,
+                              ),
+                            )),
 
                         const SizedBox(height: 15),
 
                         // Password Input Field
                         Obx(() => TextField(
-                              obscureText: controller.isObscured.value, // Toggle visibility
+                              obscureText: controller.isObscured.value,
+                              onChanged: (value) {
+                                controller.password.value = value;
+                              },
                               decoration: InputDecoration(
                                 labelText: "Password",
                                 prefixIcon: const Icon(Icons.lock),
@@ -139,9 +142,9 @@ Obx(() => TextField(
                           decoration: BoxDecoration(
                             gradient: LinearGradient(
                               colors: [
-                                Color(0xFF8862F2), // Purple gradient start
-                                Color(0xFF7544FC), // Purple gradient middle
-                                Color(0xFF5B2ED4), // Purple gradient end
+                                Color(0xFF8862F2),
+                                Color(0xFF7544FC),
+                                Color(0xFF5B2ED4),
                               ],
                               begin: Alignment.topLeft,
                               end: Alignment.bottomRight,
@@ -149,9 +152,7 @@ Obx(() => TextField(
                             borderRadius: BorderRadius.circular(30),
                           ),
                           child: ElevatedButton(
-                            onPressed: () {
-                              // Handle sign-in logic
-                            },
+                            onPressed: () {},
                             style: ElevatedButton.styleFrom(
                               backgroundColor: Colors.transparent,
                               shadowColor: Colors.transparent,
@@ -172,30 +173,8 @@ Obx(() => TextField(
                         ),
                         const SizedBox(height: 15),
 
-                        // OR Divider
-                        Row(
-                          children: [
-                            Expanded(
-                              child: Divider(
-                                thickness: 1,
-                                color: Colors.grey.shade300,
-                              ),
-                            ),
-                            Padding(
-                              padding: const EdgeInsets.symmetric(horizontal: 8.0),
-                              child: Text(
-                                "OR",
-                                style: TextStyle(color: Colors.grey),
-                              ),
-                            ),
-                            Expanded(
-                              child: Divider(
-                                thickness: 1,
-                                color: Colors.grey.shade300,
-                              ),
-                            ),
-                          ],
-                        ),
+                        // Error Message
+
                         const SizedBox(height: 15),
 
                         // Sign In With Employee ID Button
@@ -206,7 +185,8 @@ Obx(() => TextField(
                           ),
                           child: ElevatedButton.icon(
                             onPressed: () {
-Get.off(EmployeeIdSignIn())    ;                             },
+                              Get.off(EmployeeIdSignIn());
+                            },
                             icon: Icon(Icons.badge, color: Colors.purple),
                             label: Text(
                               "Sign In With Employee ID",
@@ -238,7 +218,7 @@ Get.off(EmployeeIdSignIn())    ;                             },
                       ),
                       TextButton(
                         onPressed: () {
-                          Get.off(() => Signup()); // Navigate to Sign Up screen
+                          Get.off(() => Signup());
                         },
                         child: const Text(
                           "Sign Up",

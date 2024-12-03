@@ -47,7 +47,11 @@ class TaskController extends GetxController {
     ),
   ].obs;
 
-  var selectedFilter = "All".obs; // Filter: All, In Progress, Completed
+  var selectedFilter = "All".obs;
+
+  TaskController(Type task);
+
+  get currentIndex => null; // Filter: All, In Progress, Completed
 
   void markTaskAsFinished(int index) {
     if (tasks[index].status != "Completed") {
